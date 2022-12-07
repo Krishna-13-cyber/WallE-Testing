@@ -5,22 +5,22 @@
 #include "tuning_http_server.h"
 
 #define MODE NORMAL_MODE
-#define WHITE_MARGIN 0
 #define BLACK_MARGIN 4095
+#define WHITE_MARGIN 0
 #define bound_LSA_LOW 0
 #define bound_LSA_HIGH 1000
 
 /*
  * weights given to respective line sensor
  */
-const int weights[5] = {3, 1, 0, -1, -3};
+const int weights[5] = {3, 1, 0, -1,-3};
 
 /*
  * Motor value boundts
  */
-int optimum_duty_cycle = 56;
+int optimum_duty_cycle = 63;
 int lower_duty_cycle = 50;
-int higher_duty_cycle = 65;
+int higher_duty_cycle = 76;
 float left_duty_cycle = 0, right_duty_cycle = 0;
 
 /*
@@ -33,18 +33,6 @@ float error=0, prev_error=0, difference, cumulative_error, correction;
  */
 line_sensor_array line_sensor_readings;
 
-
-void lsa_to_bar()
-{   
-    uint8_t var = 0x00;                     
-    bool number[8] = {0,0,0,0,0,0,0,0};
-    for(int i = 0; i < 5; i++)
-    {
-        number[7-i] = (line_sensor_readings.adc_reading[i] < 750) ? 0 : 1; //If adc value is less than black margin, then set that bit to 0 otherwise 1. 
-        var = bool_to_uint8(number);  //A helper function to convert bool array to unsigned int.
-        ESP_ERROR_CHECK(set_bar_graph(var)); //Setting bar graph led with unsigned int value.
-    }
-}
 
 void calculate_correction()
 {
@@ -66,7 +54,7 @@ void calculate_error()
     
     for(int i = 0; i < 5; i++)
     {
-        if(line_sensor_readings.adc_reading[i] < 700) //passing direct values
+        if(line_sensor_readings.adc_reading[i] > 700)
         {
             all_black_flag = 0;
         }
@@ -100,16 +88,15 @@ void line_follow_task(void* arg)
 {
     ESP_ERROR_CHECK(enable_motor_driver(a, NORMAL_MODE));
     ESP_ERROR_CHECK(enable_line_sensor());
-    ESP_ERROR_CHECK(enable_bar_graph());
-#ifdef CONFIG_ENABLE_OLED
-    // Declaring the required OLED struct
-    u8g2_t oled_config;
+    // ESP_ERROR_CHECK(enable_bar_graph());
+// #ifdef CONFIG_ENABLE_OLED
+//     // Declaring the required OLED struct
+//     u8g2_t oled_config;
 
-    // Initialising the OLED
-    ESP_ERROR_CHECK(init_oled(&oled_config));
-#endif
+//     // Initialising the OLED
+//     ESP_ERROR_CHECK(init_oled(&oled_config));
+// #endif
     
-    //calibrate(&black_margin, &white_margin);
     while(true)
     {
         line_sensor_readings = read_line_sensor();
@@ -117,12 +104,12 @@ void line_follow_task(void* arg)
         {
             line_sensor_readings.adc_reading[i] = bound(line_sensor_readings.adc_reading[i], WHITE_MARGIN, BLACK_MARGIN);
             line_sensor_readings.adc_reading[i] = map(line_sensor_readings.adc_reading[i], WHITE_MARGIN, BLACK_MARGIN, bound_LSA_LOW, bound_LSA_HIGH);
-            line_sensor_readings.adc_reading[i] = 1000 - line_sensor_readings.adc_reading[i];   // inversion
+            line_sensor_readings.adc_reading[i] = 1000 - (line_sensor_readings.adc_reading[i]);
         }
         
         calculate_error();
         calculate_correction();
-        lsa_to_bar();
+        // lsa_to_bar();
         
         left_duty_cycle = bound((optimum_duty_cycle - correction), lower_duty_cycle, higher_duty_cycle);
         right_duty_cycle = bound((optimum_duty_cycle + correction), lower_duty_cycle, higher_duty_cycle);
@@ -131,17 +118,16 @@ void line_follow_task(void* arg)
         set_motor_speed(MOTOR_A_1, MOTOR_FORWARD, right_duty_cycle);
 
         
-        //ESP_LOGI("debug","left_duty_cycle:  %f    ::  right_duty_cycle :  %f  :: error :  %f  correction  :  %f  \n",left_duty_cycle, right_duty_cycle, error, correction);
-        //ESP_LOGI("debug", "KP: %f ::  KI: %f  :: KD: %f", read_pid_const().kp, read_pid_const().ki, read_pid_const().kd);
-        ESP_LOGI("bounded values","1: %d  2: %d  ::  3:  %d :: 4 :  %d :: 5 : %d \n", line_sensor_readings.adc_reading[0], line_sensor_readings.adc_reading[1], line_sensor_readings.adc_reading[2] , line_sensor_readings.adc_reading[3], line_sensor_readings.adc_reading[4]);
-#ifdef CONFIG_ENABLE_OLED
-        // Diplaying kp, ki, kd values on OLED 
-        if (read_pid_const().val_changed)
-        {
-            display_pid_values(read_pid_const().kp, read_pid_const().ki, read_pid_const().kd, &oled_config);
-            reset_val_changed_pid_const();
-        }
-#endif
+        ESP_LOGI("debug","left_duty_cycle:  %f    ::  right_duty_cycle :  %f  :: error :  %f  correction  :  %f  \n",left_duty_cycle, right_duty_cycle, error, correction);
+        // ESP_LOGI("debug", "KP: %f ::  KI: %f  :: KD: %f", read_pid_const().kp, read_pid_const().ki, read_pid_const().kd);
+// #ifdef CONFIG_ENABLE_OLED
+//         // Diplaying kp, ki, kd values on OLED 
+//         if (read_pid_const().val_changed)
+//         {
+//             display_pid_values(read_pid_const().kp, read_pid_const().ki, read_pid_const().kd, &oled_config);
+//             reset_val_changed_pid_const();
+//         }
+// #endif
 
         vTaskDelay(10 / portTICK_PERIOD_MS);
     }

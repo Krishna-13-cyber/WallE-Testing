@@ -23,6 +23,9 @@
  */
 
 #include "lsa.h"
+#include "freertos/task.h"
+#include "sra_board.h"
+
 
 static const int line_sensor_pins[5] = {LSA_A0, LSA_A1, LSA_A2, LSA_A3, LSA_A4};
 
@@ -40,7 +43,7 @@ line_sensor_array read_line_sensor()
     {
         line_sensor_readings.adc_reading[i] = 0;
     }
-
+    
     for (int i = 0; i < NUMBER_OF_SAMPLES; i++)
     {
         for (int j = 0; j < 5; j++)
@@ -53,16 +56,14 @@ line_sensor_array read_line_sensor()
     {
         line_sensor_readings.adc_reading[i] = line_sensor_readings.adc_reading[i] / NUMBER_OF_SAMPLES;
     }
-    ESP_LOGI("Raw values"," %d        %d        %d         %d        %d\n", line_sensor_readings.adc_reading[0], line_sensor_readings.adc_reading[1], line_sensor_readings.adc_reading[2] , line_sensor_readings.adc_reading[3], line_sensor_readings.adc_reading[4]);
 
-   
     return line_sensor_readings;
 }
 
 void calibrate (int *black_margin, int *white_margin)
 {                
     int Max = 0;
-    int Min = 4095;
+    int Min = 1001;
 
     line_sensor_array current_line_sensor_readings;
     for (int i = 0; i < 5; i++)
@@ -80,9 +81,8 @@ void calibrate (int *black_margin, int *white_margin)
         if (current_line_sensor_readings.adc_reading[j] < Min) 
         {
             Min = current_line_sensor_readings.adc_reading[j];
-        }
-    }
-              
-    *black_margin = Max;
-    *white_margin = Min;
+        } 
+    }          
+        *black_margin = Min;
+        *white_margin = Max;
 }

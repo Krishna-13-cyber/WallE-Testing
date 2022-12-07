@@ -77,23 +77,23 @@ esp_err_t enable_adc1()
 
 int read_adc(int adc_pin)
 {
-    if (adc_pin == LSA_A0)
+    if (adc_pin == LSA_A4)
     {
         return adc1_get_raw(ADC_CHANNEL_4);
     }
-    else if (adc_pin == LSA_A1)
-    {
-        return adc1_get_raw(ADC_CHANNEL_7);//6
-    }
     else if (adc_pin == LSA_A2)
     {
-        return adc1_get_raw(ADC_CHANNEL_6);//3
+        return adc1_get_raw(ADC_CHANNEL_6);
+    }
+    else if (adc_pin == LSA_A1)
+    {
+        return adc1_get_raw(ADC_CHANNEL_3);
     }
     else if (adc_pin == LSA_A3)
     {
-        return adc1_get_raw(ADC_CHANNEL_3);//7
+        return adc1_get_raw(ADC_CHANNEL_7);
     }
-    else if (adc_pin == LSA_A4)
+    else if (adc_pin == LSA_A0)
     {
         return adc1_get_raw(ADC_CHANNEL_0);
     }
@@ -103,4 +103,3 @@ int read_adc(int adc_pin)
         return ESP_FAIL;
     }
 }
-

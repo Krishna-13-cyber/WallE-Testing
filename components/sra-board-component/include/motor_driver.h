@@ -71,6 +71,13 @@
  */
 esp_err_t enable_motor_driver_a(int mode);
 
+/**
+ * @brief Enables Motor driver B in Parallel or Normal Mode
+ * 
+ * @param mode if mode = 1 is passed, motor driver is operated in parallel mode, if mode = 2 is passed, motor driver is operated in normal mode
+ * @return esp_err_t returns ESP_OK if motor driver initialised properly, else it returns ESP_ERR_INVALID_ARG 
+ */
+esp_err_t enable_motor_driver_b(int mode);
 
 /**
  * @brief Set the speed of motors
@@ -89,5 +96,11 @@ esp_err_t set_motor_speed(int motor_id, int direction, float duty_cycle);
  */
 int read_motor_driver_mode_a();
 
+/**
+ * @brief Reads mode of motor driver B
+ * 
+ * @return int returns mode of motor driver B, 1 = Parallel mode, 2 = Normal mode
+ */
+int read_motor_driver_mode_b();
 
 #endif
