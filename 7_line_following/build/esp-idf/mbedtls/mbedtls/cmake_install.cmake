@@ -34,9 +34,9 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/krishna/Desktop/walle_testing/7_line_following/build/esp-idf/mbedtls/mbedtls/include/cmake_install.cmake")
-  include("/home/krishna/Desktop/walle_testing/7_line_following/build/esp-idf/mbedtls/mbedtls/3rdparty/cmake_install.cmake")
-  include("/home/krishna/Desktop/walle_testing/7_line_following/build/esp-idf/mbedtls/mbedtls/library/cmake_install.cmake")
+  include("/home/krishna/WallE-Testing/7_line_following/build/esp-idf/mbedtls/mbedtls/include/cmake_install.cmake")
+  include("/home/krishna/WallE-Testing/7_line_following/build/esp-idf/mbedtls/mbedtls/3rdparty/cmake_install.cmake")
+  include("/home/krishna/WallE-Testing/7_line_following/build/esp-idf/mbedtls/mbedtls/library/cmake_install.cmake")
 
 endif()
 

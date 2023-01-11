@@ -1,4 +1,4 @@
-# Install script for directory: /home/krishna/Desktop/walle_testing/7_line_following/main
+# Install script for directory: /home/krishna/WallE-Testing/7_line_following/main
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

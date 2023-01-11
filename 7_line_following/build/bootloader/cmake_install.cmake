@@ -34,7 +34,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/krishna/Desktop/walle_testing/7_line_following/build/bootloader/esp-idf/cmake_install.cmake")
+  include("/home/krishna/WallE-Testing/7_line_following/build/bootloader/esp-idf/cmake_install.cmake")
 
 endif()
 
@@ -46,5 +46,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/krishna/Desktop/walle_testing/7_line_following/build/bootloader/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/krishna/WallE-Testing/7_line_following/build/bootloader/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

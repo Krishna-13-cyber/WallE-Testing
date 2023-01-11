@@ -1,4 +1,4 @@
-/* * Data converted from /home/krishna/Desktop/walle_testing/7_line_following/build/esp-idf/mbedtls/x509_crt_bundle
+/* * Data converted from /home/krishna/WallE-Testing/7_line_following/build/esp-idf/mbedtls/x509_crt_bundle
  */
 .data
 .section .rodata.embedded

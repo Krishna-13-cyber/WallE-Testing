@@ -1,8 +1,8 @@
 {
     "project_name":       "bootloader",
     "project_path":       "/home/krishna/esp/esp-idf/components/bootloader/subproject",
-    "build_dir":          "/home/krishna/Desktop/walle_testing/7_line_following/build/bootloader",
-    "config_file":        "/home/krishna/Desktop/walle_testing/7_line_following/sdkconfig",
+    "build_dir":          "/home/krishna/WallE-Testing/7_line_following/build/bootloader",
+    "config_file":        "/home/krishna/WallE-Testing/7_line_following/sdkconfig",
     "config_defaults":    "",
     "app_elf":            "bootloader.elf",
     "app_bin":            "bootloader.bin",

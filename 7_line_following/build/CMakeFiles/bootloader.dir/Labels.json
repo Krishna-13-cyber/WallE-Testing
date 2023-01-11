@@ -2,34 +2,34 @@
 	"sources" : 
 	[
 		{
-			"file" : "/home/krishna/Desktop/walle_testing/7_line_following/build/CMakeFiles/bootloader"
+			"file" : "/home/krishna/WallE-Testing/7_line_following/build/CMakeFiles/bootloader"
 		},
 		{
-			"file" : "/home/krishna/Desktop/walle_testing/7_line_following/build/CMakeFiles/bootloader.rule"
+			"file" : "/home/krishna/WallE-Testing/7_line_following/build/CMakeFiles/bootloader.rule"
 		},
 		{
-			"file" : "/home/krishna/Desktop/walle_testing/7_line_following/build/CMakeFiles/bootloader-complete.rule"
+			"file" : "/home/krishna/WallE-Testing/7_line_following/build/CMakeFiles/bootloader-complete.rule"
 		},
 		{
-			"file" : "/home/krishna/Desktop/walle_testing/7_line_following/build/bootloader-prefix/src/bootloader-stamp/bootloader-install.rule"
+			"file" : "/home/krishna/WallE-Testing/7_line_following/build/bootloader-prefix/src/bootloader-stamp/bootloader-install.rule"
 		},
 		{
-			"file" : "/home/krishna/Desktop/walle_testing/7_line_following/build/bootloader-prefix/src/bootloader-stamp/bootloader-mkdir.rule"
+			"file" : "/home/krishna/WallE-Testing/7_line_following/build/bootloader-prefix/src/bootloader-stamp/bootloader-mkdir.rule"
 		},
 		{
-			"file" : "/home/krishna/Desktop/walle_testing/7_line_following/build/bootloader-prefix/src/bootloader-stamp/bootloader-download.rule"
+			"file" : "/home/krishna/WallE-Testing/7_line_following/build/bootloader-prefix/src/bootloader-stamp/bootloader-download.rule"
 		},
 		{
-			"file" : "/home/krishna/Desktop/walle_testing/7_line_following/build/bootloader-prefix/src/bootloader-stamp/bootloader-update.rule"
+			"file" : "/home/krishna/WallE-Testing/7_line_following/build/bootloader-prefix/src/bootloader-stamp/bootloader-update.rule"
 		},
 		{
-			"file" : "/home/krishna/Desktop/walle_testing/7_line_following/build/bootloader-prefix/src/bootloader-stamp/bootloader-patch.rule"
+			"file" : "/home/krishna/WallE-Testing/7_line_following/build/bootloader-prefix/src/bootloader-stamp/bootloader-patch.rule"
 		},
 		{
-			"file" : "/home/krishna/Desktop/walle_testing/7_line_following/build/bootloader-prefix/src/bootloader-stamp/bootloader-configure.rule"
+			"file" : "/home/krishna/WallE-Testing/7_line_following/build/bootloader-prefix/src/bootloader-stamp/bootloader-configure.rule"
 		},
 		{
-			"file" : "/home/krishna/Desktop/walle_testing/7_line_following/build/bootloader-prefix/src/bootloader-stamp/bootloader-build.rule"
+			"file" : "/home/krishna/WallE-Testing/7_line_following/build/bootloader-prefix/src/bootloader-stamp/bootloader-build.rule"
 		}
 	],
 	"target" : 

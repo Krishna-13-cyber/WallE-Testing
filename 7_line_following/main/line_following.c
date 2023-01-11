@@ -13,7 +13,7 @@
 /*
  * weights given to respective line sensor
  */
-const int weights[5] = {3, 1, 0, -1,-3};
+const int weights[5] = {1, 2, 3, 4, 5};
 
 /*
  * Motor value boundts
@@ -33,7 +33,6 @@ float error=0, prev_error=0, difference, cumulative_error, correction;
  */
 line_sensor_array line_sensor_readings;
 
-
 void calculate_correction()
 {
     error = error*10;  // we need the error correction in range 0-100 so that we can send it directly as duty cycle paramete
@@ -50,21 +49,31 @@ void calculate_error()
 {
     int all_black_flag = 1; // assuming initially all black condition
     float weighted_sum = 0, sum = 0; 
-    float pos = 0;
-    
+    float pos = 0; int k = 0;
+
     for(int i = 0; i < 5; i++)
     {
         if(line_sensor_readings.adc_reading[i] > 700)
         {
             all_black_flag = 0;
         }
-        weighted_sum += (float)(weights[i]) * (line_sensor_readings.adc_reading[i]);
-        sum = sum + line_sensor_readings.adc_reading[i];
+        if(line_sensor_readings.adc_reading[i] > 500)
+        {
+            k = 1;
+        } 
+        if(line_sensor_readings.adc_reading[i] < 500)
+        {
+            k = 0;
+        }
+        // weighted_sum += (float)(weights[i]) * (line_sensor_readings.adc_reading[i]);
+        weighted_sum += (float)(weights[i]) * k;
+        sum = sum + k;
     }
 
     if(sum != 0) // sum can never be 0 but just for safety purposes
     {
-        pos = weighted_sum / sum; // This will give us the position wrt line. if +ve then bot is facing left and if -ve the bot is facing to right.
+        // pos = weighted_sum / sum; // This will give us the position wrt line. if +ve then bot is facing left and if -ve the bot is facing to right.
+        pos = (weighted_sum - 9) / sum;
     }
 
     if(all_black_flag == 1)  // If all black then we check for previous error to assign current error.
@@ -96,7 +105,7 @@ void line_follow_task(void* arg)
 //     // Initialising the OLED
 //     ESP_ERROR_CHECK(init_oled(&oled_config));
 // #endif
-    
+
     while(true)
     {
         line_sensor_readings = read_line_sensor();
@@ -106,18 +115,17 @@ void line_follow_task(void* arg)
             line_sensor_readings.adc_reading[i] = map(line_sensor_readings.adc_reading[i], WHITE_MARGIN, BLACK_MARGIN, bound_LSA_LOW, bound_LSA_HIGH);
             line_sensor_readings.adc_reading[i] = 1000 - (line_sensor_readings.adc_reading[i]);
         }
-        
+
         calculate_error();
         calculate_correction();
         // lsa_to_bar();
-        
+
         left_duty_cycle = bound((optimum_duty_cycle - correction), lower_duty_cycle, higher_duty_cycle);
         right_duty_cycle = bound((optimum_duty_cycle + correction), lower_duty_cycle, higher_duty_cycle);
 
         set_motor_speed(MOTOR_A_0, MOTOR_FORWARD, left_duty_cycle);
         set_motor_speed(MOTOR_A_1, MOTOR_FORWARD, right_duty_cycle);
 
-        
         ESP_LOGI("debug","left_duty_cycle:  %f    ::  right_duty_cycle :  %f  :: error :  %f  correction  :  %f  \n",left_duty_cycle, right_duty_cycle, error, correction);
         // ESP_LOGI("debug", "KP: %f ::  KI: %f  :: KD: %f", read_pid_const().kp, read_pid_const().ki, read_pid_const().kd);
 // #ifdef CONFIG_ENABLE_OLED
