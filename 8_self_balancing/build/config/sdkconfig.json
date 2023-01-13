@@ -75,7 +75,7 @@
     "EFUSE_CUSTOM_TABLE": false,
     "EFUSE_MAX_BLK_LEN": 192,
     "EFUSE_VIRTUAL": false,
-    "ENABLE_OLED": true,
+    "ENABLE_OLED": false,
     "ESP32_BROWNOUT_DET": true,
     "ESP32_BROWNOUT_DET_LVL": 0,
     "ESP32_BROWNOUT_DET_LVL_SEL_0": true,

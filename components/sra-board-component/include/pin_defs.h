@@ -97,6 +97,8 @@
 #define SERVO_A 5
 #define SERVO_B 18
 #define SERVO_C 19
+#define SERVO_D 18
+
 /////////////////////////////
 
 #endif

@@ -13,14 +13,14 @@
 /*
  * weights given to respective line sensor
  */
-const int weights[5] = {1, 2, 3, 4, 5};
+const int weights[5] = {-5, -3, 1, 3, 5};
 
 /*
  * Motor value boundts
  */
-int optimum_duty_cycle = 63;
+int optimum_duty_cycle = 60;
 int lower_duty_cycle = 50;
-int higher_duty_cycle = 76;
+int higher_duty_cycle = 70;
 float left_duty_cycle = 0, right_duty_cycle = 0;
 
 /*
@@ -73,7 +73,7 @@ void calculate_error()
     if(sum != 0) // sum can never be 0 but just for safety purposes
     {
         // pos = weighted_sum / sum; // This will give us the position wrt line. if +ve then bot is facing left and if -ve the bot is facing to right.
-        pos = (weighted_sum - 9) / sum;
+        pos = (weighted_sum - 1) / sum;
     }
 
     if(all_black_flag == 1)  // If all black then we check for previous error to assign current error.
@@ -120,8 +120,8 @@ void line_follow_task(void* arg)
         calculate_correction();
         // lsa_to_bar();
 
-        left_duty_cycle = bound((optimum_duty_cycle - correction), lower_duty_cycle, higher_duty_cycle);
-        right_duty_cycle = bound((optimum_duty_cycle + correction), lower_duty_cycle, higher_duty_cycle);
+        right_duty_cycle = bound((optimum_duty_cycle - correction), lower_duty_cycle, higher_duty_cycle);
+        left_duty_cycle = bound((optimum_duty_cycle + correction), lower_duty_cycle, higher_duty_cycle);
 
         set_motor_speed(MOTOR_A_0, MOTOR_FORWARD, left_duty_cycle);
         set_motor_speed(MOTOR_A_1, MOTOR_FORWARD, right_duty_cycle);

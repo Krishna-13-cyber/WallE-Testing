@@ -1263,7 +1263,7 @@ CONFIG_I2CDEV_TIMEOUT=1000
 # CONFIG_I2CDEV_NOLOCK is not set
 # end of I2C
 
-CONFIG_ENABLE_OLED=y
+# CONFIG_ENABLE_OLED is not set
 
 #
 # Servo motor configuration
